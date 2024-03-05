@@ -13,7 +13,8 @@ package ca.sheridancollege.project;
  */
 public abstract class Player {
 
-    private String name; //the unique name for this player
+    private String name;
+    private Hand hand;//the unique name for this player
 
     /**
      * A constructor that allows you to set the player's unique ID
@@ -22,6 +23,7 @@ public abstract class Player {
      */
     public Player(String name) {
         this.name = name;
+        this.hand = new Hand();
     }
 
     /**
@@ -29,6 +31,18 @@ public abstract class Player {
      */
     public String getName() {
         return name;
+    }
+    
+    public Hand getHand(){
+        return hand;
+    }
+    
+    public void drawCard(Card card){
+        hand.addCard(card);
+    }
+    
+    public boolean hasCards(){
+        return !hand.isEmpty();
     }
 
     /**
@@ -45,5 +59,10 @@ public abstract class Player {
      * with logic to play your game.
      */
     public abstract void play();
+    
+    @Override
+    public String toString(){
+        return name + ":" + hand.size() + "cards";
+    }
 
 }
