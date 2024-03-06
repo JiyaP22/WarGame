@@ -9,7 +9,7 @@ package ca.sheridancollege.project;
  * A class to be used as the base Card class for the project. Must be general enough to be instantiated for any Card
  * game. Students wishing to add to the code should remember to add themselves as a modifier.
  *
- * @author Jiya 05 March 2023 
+ * @author Jiya 05 March 2024 
  */
 public abstract class Card {
      private String suit; //clubs, spades, diamonds, hearts
@@ -25,6 +25,14 @@ public abstract class Card {
      
      public String getSuit() {
         return suit;
+    }
+
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
    

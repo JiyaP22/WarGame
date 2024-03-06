@@ -1,96 +1,91 @@
+package ca.sheridancollege.project;
 
-import ca.sheridancollege.project.Card;
-import ca.sheridancollege.project.Player;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Game {
-    private Deck deck;
-    private Player player1;
-    private Player player2;
+/**
+ * The class that models your game. You should create a more specific child of this class and instantiate the methods
+ * given.
+ * 
+ * 
+ * @author Jiya 06 March 2024
+ */
+public abstract class Game {
 
-    public Game(String player1Name, String player2Name) {
-        deck = new Deck();
-        player1 = new Player(player1Name);
-        player2 = new Player(player2Name);
+    private final String name; // the title of the game
+    private ArrayList<Player> players; // the players of the game
+
+    public Game(String name) {
+        this.name = name;
+        players = new ArrayList<>();
     }
 
-    public void start() {
-        deck.shuffle();
-        dealCards();
-        play();
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
-    private void dealCards() {
-        while (deck.size() > 0) {
-            player1.drawCard(deck.removeTopCard());
-            player2.drawCard(deck.removeTopCard());
+    /**
+     * @return the players of this game
+     */
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * @param players the players of this game
+     */
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    /**
+     * Play the game. This might be one method or many method calls depending on your game.
+     */
+    public abstract void play();
+
+    /**
+     * When the game is over, use this method to declare and display a winning player.
+     */
+    public abstract void declareWinner();
+
+    /**
+     * Represents a deck of playing cards.
+     */
+    public static class Deck {
+        private List<Card> cards;
+
+        public Deck() {
+            cards = new ArrayList<>();
+            initializeDeck();
         }
-    }
 
-    private void play() {
-        while (player1.hasCards() && player2.hasCards()) {
-            Card card1 = player1.getHand().removeTopCard();
-            Card card2 = player2.getHand().removeTopCard();
-
-            System.out.println(player1.getName() + " plays " + card1);
-            System.out.println(player2.getName() + " plays " + card2);
-
-            if (card1.getValue() > card2.getValue()) {
-                player1.getHand().addCard(card1);
-                player1.getHand().addCard(card2);
-                System.out.println(player1.getName() + " wins the round!");
-            } else if (card1.getValue() < card2.getValue()) {
-                player2.getHand().addCard(card1);
-                player2.getHand().addCard(card2);
-                System.out.println(player2.getName() + " wins the round!");
-            } else {
-                System.out.println("It's a tie! Both players play one more card.");
-                List<Card> tieCards = new ArrayList<>();
-                tieCards.add(card1);
-                tieCards.add(card2);
-                playTieBreaker(tieCards);
+        private void initializeDeck() {
+            String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+            for (String suit : suits) {
+                for (int value = 2; value <= 14; value++) {
+                    cards.add(new Card(suit, value) {});
+                }
             }
-
-            System.out.println(player1);
-            System.out.println(player2);
-            System.out.println("-----------------------");
         }
 
-        if (!player1.hasCards()) {
-            System.out.println(player2.getName() + " wins the game!");
-        } else {
-            System.out.println(player1.getName() + " wins the game!");
-        }
-    }
-
-    private void playTieBreaker(List<Card> tieCards) {
-        if (!player1.hasCards() || !player2.hasCards()) {
-            return;
+        public void shuffle() {
+            Collections.shuffle(cards);
         }
 
-        Card card1 = player1.getHand().removeTopCard();
-        Card card2 = player2.getHand().removeTopCard();
-        tieCards.add(card1);
-        tieCards.add(card2);
-
-        System.out.println(player1.getName() + " plays " + card1);
-        System.out.println(player2.getName() + " plays " + card2);
-
-        if (card1.getValue() > card2.getValue()) {
-            player1.getHand().addAllCards(tieCards);
-            System.out.println(player1.getName() + " wins the tiebreaker!");
-        } else if (card1.getValue() < card2.getValue()) {
-            player2.getHand().addAllCards(tieCards);
-            System.out.println(player2.getName() + " wins the tiebreaker!");
-        } else {
-            System.out.println("Tiebreaker continues...");
-            playTieBreaker(tieCards);
+        public Card removeTopCard() {
+            if (!cards.isEmpty()) {
+                return cards.remove(0);
+            } else {
+                return null; // Return null if deck is empty
+            }
         }
-    }
 
-    public static void main(String[] args) {
-        Game game = new Game("Player 1", "Player 2");
-        game.start();
+        public int size() {
+            return cards.size();
+        }
     }
 }
