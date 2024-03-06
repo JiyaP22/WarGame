@@ -12,6 +12,10 @@ package ca.sheridancollege.project;
  * @author Jiya 05 March 2024 
  */
 public abstract class Card {
+
+    static Iterable<String> getSuits() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
      private String suit; //clubs, spades, diamonds, hearts
      private int value;
     //default modifier for child classes

@@ -88,4 +88,14 @@ public abstract class Game {
             return cards.size();
         }
     }
+
+    /**
+     * Main method to demonstrate the game.
+     */
+    public static void main(String[] args) {
+        // Instantiate your game here and start playing
+        // For example:
+         //MyGame myGame = new MyGame();
+        // myGame.play();
+    }
 }
