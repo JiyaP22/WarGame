@@ -56,7 +56,7 @@ public abstract class Game {
      * Represents a deck of playing cards.
      */
     public static class Deck {
-        private List<Card> cards;
+        private final List<Card> cards;
 
         public Deck() {
             cards = new ArrayList<>();
@@ -91,11 +91,12 @@ public abstract class Game {
 
     /**
      * Main method to demonstrate the game.
+     * @param args
      */
     public static void main(String[] args) {
-        // Instantiate your game here and start playing
-        // For example:
-         //MyGame myGame = new MyGame();
-        // myGame.play();
+        
     }
+   
+    
+    
 }
