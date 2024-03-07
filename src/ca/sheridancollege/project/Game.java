@@ -1,8 +1,6 @@
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * The class that models your game. You should create a more specific child of this class and instantiate the methods
@@ -15,10 +13,12 @@ public abstract class Game {
 
     private final String name; // the title of the game
     private ArrayList<Player> players; // the players of the game
+    private Deck deck;
 
     public Game(String name) {
         this.name = name;
         players = new ArrayList<>();
+        deck = new Deck();
     }
 
     /**
@@ -42,6 +42,19 @@ public abstract class Game {
         this.players = players;
     }
 
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    public void initializeDeck() {
+        deck.initializeDeck();
+        deck.shuffle();
+    }
+
+    public Card drawCard() {
+        return deck.removeTopCard();
+    }
+
     /**
      * Play the game. This might be one method or many method calls depending on your game.
      */
@@ -55,48 +68,39 @@ public abstract class Game {
     /**
      * Represents a deck of playing cards.
      */
-    public static class Deck {
-        private final List<Card> cards;
+    public static class Deck extends GroupOfCards {
 
         public Deck() {
-            cards = new ArrayList<>();
-            initializeDeck();
+            super(52);
         }
 
-        private void initializeDeck() {
+        public void initializeDeck() {
             String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
             for (String suit : suits) {
                 for (int value = 2; value <= 14; value++) {
-                    cards.add(new Card(suit, value) {});
+                    addCard(new Card(suit, value) {});
                 }
             }
         }
-
-        public void shuffle() {
-            Collections.shuffle(cards);
-        }
-
-        public Card removeTopCard() {
-            if (!cards.isEmpty()) {
-                return cards.remove(0);
-            } else {
-                return null; // Return null if deck is empty
-            }
-        }
-
-        public int size() {
-            return cards.size();
-        }
     }
 
-    /**
-     * Main method to demonstrate the game.
-     * @param args
-     */
     public static void main(String[] args) {
-        
+        // Create a new game instance
+        WarGame warGame = new WarGame("War Card Game");
+
+        // Add players to the game
+        Player player1 = new WarPlayer("Player 1");
+        Player player2 = new WarPlayer("Player 2");
+        warGame.addPlayer(player1);
+        warGame.addPlayer(player2);
+
+        // Initialize the deck
+        warGame.initializeDeck();
+
+        // Play the game
+        warGame.play();
+
+        // Declare the winner
+        warGame.declareWinner();
     }
-   
-    
-    
 }

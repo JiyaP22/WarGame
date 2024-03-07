@@ -1,9 +1,3 @@
-/**
- * SYST 17796 Project Base code.
- * Students can modify and extend to implement their game.
- * Add your name as an author and the date!
- * @author Jiya 06 March 2024
- */
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
@@ -14,24 +8,28 @@ import java.util.Collections;
  * once. The group of cards has a maximum size attribute which is flexible for reuse.
  *
  * @author Jiya 05 March 2023
- * 
  */
 public abstract class GroupOfCards {
 
-    //The group of cards, stored in an ArrayList
+    // The group of cards, stored in an ArrayList
     private ArrayList<Card> cards;
-    private int size;//the size of the grouping
+    private int size; // the size of the grouping
 
     public GroupOfCards(int size) {
         this.size = size;
+        this.cards = new ArrayList<>(); // Initialize the cards ArrayList
     }
-    
-    public void addCard(Card card){
+
+    public void addCard(Card card) {
         cards.add(card);
     }
-    
-    public Card removeTopCard(){
-        return cards.remove(0);
+
+    public Card removeTopCard() {
+        if (!cards.isEmpty()) {
+            return cards.remove(0);
+        } else {
+            return null; // Return null if the list is empty
+        }
     }
 
     /**
@@ -60,5 +58,4 @@ public abstract class GroupOfCards {
     public void setSize(int size) {
         this.size = size;
     }
-
-}//end class
+}
